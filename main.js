@@ -7,28 +7,15 @@ const counter = (state = 0, action) => {
     return state
 }
 
-//TDD
+const { createStore } = Redux
+const store = createStore(counter)
 
-console.assert(
-    counter(0, { type: 'INCREMENT' }) === 1, 'STATE=0 + 1 = 1'
-)
+store.subscribe(() => {
+    console.log('dispatched action',store.getState())
+})
 
-console.assert(
-    counter(1, { type: 'INCREMENT' }) === 2, 'STATE=1 + 1 = 2'
-)
+store.dispatch({ type: 'INCREMENT' })
+store.dispatch({ type: 'INCREMENT' })
+store.dispatch({ type: 'DECREMENT' })
+store.dispatch({ type: 'NO EXISTS' })
 
-console.assert(
-    counter(2, { type: 'DECREMENT' }) === 1, 'STATE=2 - 1 = 1'
-)
-
-console.assert(
-    counter(5, { type: 'DECREMENT' }) === 4, 'STATE=5 - 1 = 4'
-)
-
-console.assert(
-    counter(3, { type: 'SOMETHING' }) === 3, 'STATE=3 - 0 = 3'
-)
-
-console.assert(
-    counter(undefined, {}) === 0, 'STATE=undefined = 0'
-)
